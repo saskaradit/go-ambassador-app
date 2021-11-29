@@ -5,8 +5,9 @@ import (
 	"ambassador/util"
 	"fmt"
 	"log"
+	"net/url"
 
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -18,7 +19,15 @@ func ConnectDB() {
 	if err != nil {
 		log.Fatalln("cannot load config")
 	}
-	DB, err = gorm.Open(mysql.Open(fmt.Sprintf("%v:%v@tcp(%v:%v)/%v", config.DBUser, config.DBPassword, config.DBHost, config.DBPort, config.DBName)), &gorm.Config{})
+	dsn := url.URL{
+		User:     url.UserPassword(config.DBUser, config.DBPassword),
+		Scheme:   "postgres",
+		Host:     fmt.Sprintf("%s:%d", config.DBHost, config.DBPort),
+		Path:     config.DBName,
+		RawQuery: (&url.Values{"sslmode": []string{"disable"}}).Encode(),
+	}
+
+	DB, err = gorm.Open(postgres.Open(dsn.String()), &gorm.Config{})
 	fmt.Println(fmt.Sprintf("%v:%v@tcp(%v:%v)/%v", config.DBUser, config.DBPassword, config.DBHost, config.DBPort, config.DBName))
 	if err != nil {
 		panic("Could not connect to the database")

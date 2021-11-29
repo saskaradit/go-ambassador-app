@@ -9,14 +9,14 @@ services:
     depends_on:
       - db
   db:
-    image: mysql:5.7.22
+    image: postgres:14.1
     restart: always
     environment:
-      MYSQL_DATABASE: ambassador
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_ROOT_PASSWORD: root
+      POSTGRES_DB: ambassador
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_ROOT_PASSWORD: root
     volumes:
-      - ".dbdata:/var/lib/mysql"
+      - ".dbdata:/var/postgresql/data"
     ports:
-      - 33066:3306
+      - 5432:5432
