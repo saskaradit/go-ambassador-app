@@ -2,10 +2,9 @@ package database
 
 import (
 	"ambassador/src/models"
-	"ambassador/util"
+	"ambassador/src/util"
 	"fmt"
 	"log"
-	"net/url"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -19,16 +18,11 @@ func ConnectDB() {
 	if err != nil {
 		log.Fatalln("cannot load config")
 	}
-	dsn := url.URL{
-		User:     url.UserPassword(config.DBUser, config.DBPassword),
-		Scheme:   "postgres",
-		Host:     fmt.Sprintf("%s:%d", config.DBHost, config.DBPort),
-		Path:     config.DBName,
-		RawQuery: (&url.Values{"sslmode": []string{"disable"}}).Encode(),
-	}
+	// dsn := "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai"
+	dsn := fmt.Sprintf("host=%v user=%v password=%v dbname=%v port=%v", config.DBHost, config.DBUser, config.DBPassword, config.DBName, config.DBPort)
 
-	DB, err = gorm.Open(postgres.Open(dsn.String()), &gorm.Config{})
-	fmt.Println(fmt.Sprintf("%v:%v@tcp(%v:%v)/%v", config.DBUser, config.DBPassword, config.DBHost, config.DBPort, config.DBName))
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	fmt.Println(fmt.Sprintf("host=%v user=%v password=%v dbname=%v port=%v", config.DBHost, config.DBUser, config.DBPassword, config.DBName, config.DBPort))
 	if err != nil {
 		panic("Could not connect to the database")
 	}
