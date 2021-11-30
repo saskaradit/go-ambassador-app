@@ -29,5 +29,5 @@ func ConnectDB() {
 }
 
 func AutoMigrate() {
-	DB.AutoMigrate(models.User{})
+	DB.AutoMigrate(models.User{}, models.Product{})
 }

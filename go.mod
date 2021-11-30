@@ -4,6 +4,8 @@ go 1.17
 
 require (
 	github.com/andybalholm/brotli v1.0.2 // indirect
+	github.com/bxcodec/faker v2.0.1+incompatible // indirect
+	github.com/bxcodec/faker/v3 v3.6.0 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
