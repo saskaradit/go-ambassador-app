@@ -8,6 +8,7 @@ services:
       - ".:/app"
     depends_on:
       - db
+      - redis
   db:
     image: postgres:14.1
     restart: always
@@ -20,3 +21,8 @@ services:
       - ".dbdata:/var/postgresql/data"
     ports:
       - 5432:5432
+
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379

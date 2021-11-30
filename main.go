@@ -32,4 +32,5 @@ func init() {
 	}
 	database.ConnectDB()
 	database.AutoMigrate()
+	database.SetupRedis()
 }
