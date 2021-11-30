@@ -30,7 +30,7 @@ func main() {
 			FirstName:       faker.FirstName(),
 			Email:           faker.Email(),
 			Complete:        true,
-			OrderItem:       orderItems,
+			OrderItems:      orderItems,
 		})
 	}
 }

@@ -10,7 +10,12 @@ import (
 func Orders(c *fiber.Ctx) error {
 	var orders []models.Order
 
-	database.DB.Find(&orders)
+	database.DB.Preload("OrderItems").Find(&orders)
+
+	for i, order := range orders {
+		orders[i].FullName = order.Name()
+		orders[i].Total = order.GetTotal()
+	}
 
 	return c.JSON(orders)
 }
