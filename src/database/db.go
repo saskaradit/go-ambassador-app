@@ -18,7 +18,6 @@ func ConnectDB() {
 	if err != nil {
 		log.Fatalln("cannot load config")
 	}
-	// dsn := "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai"
 	dsn := fmt.Sprintf("host=%v user=%v password=%v dbname=%v port=%v", config.DBHost, config.DBUser, config.DBPassword, config.DBName, config.DBPort)
 
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
