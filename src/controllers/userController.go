@@ -27,10 +27,10 @@ func Rankings(c *fiber.Ctx) error {
 		return err
 	}
 
-	result := make(map[int]interface{})
+	result := make(map[string]float64)
 
-	for i, ranking := range rankings {
-		result[i] = ranking.Score
+	for _, ranking := range rankings {
+		result[ranking.Member.(string)] = ranking.Score
 	}
 
 	return c.JSON(result)
