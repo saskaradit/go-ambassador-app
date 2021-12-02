@@ -1,41 +1,44 @@
-import React from 'react'
-import Nav from '../components/nav'
-import Menu from '../components/menu'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import Layout from '../components/layout'
+import { User } from '../models/user'
 
 const Users = () => {
+  const [users, setUsers] = useState<User[]>([])
+  
+  useEffect(()=>{
+    (
+      async () => {
+        const {data} = await axios.get('/ambassadors')
+        setUsers(data)
+      }
+    )
+  },[])
   return (
-    <div>
-      <Nav/>
-      <div className="container-fluid">
-        <div className="row">
-          <Menu/>
-          <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <div className="table-responsive">
-              <table className="table table-striped table-sm">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1,001</td>
-                    <td>random</td>
-                    <td>data</td>
-                    <td>placeholder</td>
-                    <td>text</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </main>
-        </div>
-      </div>
-    </div>
+    <Layout>
+      <table className="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map(user => {
+              return (
+                <tr>
+                  <td>{user.id}</td>
+                  <td>{user.first_name} {user.last_name}</td>
+                  <td>{user.email}</td>
+                  <td></td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+    </Layout>
   )
 }
 

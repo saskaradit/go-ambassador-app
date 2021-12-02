@@ -10,7 +10,7 @@ const Login = () => {
     e.preventDefault()
     await axios.post('/admin/login', {
       email, password
-    }, {withCredentials:true})
+    },)
 
     setRedirect(true)
   }
