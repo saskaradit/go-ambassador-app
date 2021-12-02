@@ -3,6 +3,7 @@ package controllers
 import (
 	"ambassador/src/database"
 	"ambassador/src/models"
+	"ambassador/src/util"
 	"context"
 	"fmt"
 	"net/http"
@@ -12,6 +13,18 @@ import (
 	"github.com/stripe/stripe-go/v72"
 	"github.com/stripe/stripe-go/v72/checkout/session"
 )
+
+type CreateOrderRequest struct {
+	Code      string
+	FirstName string
+	LastName  string
+	Email     string
+	Address   string
+	Country   string
+	City      string
+	Zip       string
+	Products  []map[string]int
+}
 
 func Orders(c *fiber.Ctx) error {
 	var orders []models.Order
@@ -24,18 +37,6 @@ func Orders(c *fiber.Ctx) error {
 	}
 
 	return c.JSON(orders)
-}
-
-type CreateOrderRequest struct {
-	Code      string
-	FirstName string
-	LastName  string
-	Email     string
-	Address   string
-	Country   string
-	City      string
-	Zip       string
-	Products  []map[string]int
 }
 
 func CreateOrder(c *fiber.Ctx) error {
@@ -116,7 +117,7 @@ func CreateOrder(c *fiber.Ctx) error {
 		})
 	}
 
-	stripe.Key = "sk_test_51Hp4eGErCpQSuQA2UjLd1wZkyFKOQQyryZBDwCNK70WZFhWNm2UsXsrOTSGKmm85dNM7PMhxrmAV7DkDfMcmITgA00JCRTTLwi"
+	stripe.Key = util.Conf.StripeKey
 
 	params := stripe.CheckoutSessionParams{
 		SuccessURL:         stripe.String("http://localhost:5000/success?source={CHECKOUT_SESSION_ID}"),

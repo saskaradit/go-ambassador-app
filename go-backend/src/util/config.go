@@ -6,6 +6,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+var Conf Config
+
 // Config stores all configuration of the application
 // The values are read by viper from a config file or environment variable
 type Config struct {
@@ -14,22 +16,22 @@ type Config struct {
 	DBUser     string `mapstructure:"DB_USER"`
 	DBPassword string `mapstructure:"DB_PASSWORD"`
 	DBName     string `mapstructure:"DB_NAME"`
+	StripeKey  string `mapstructure:"STRIPE_KEY"`
 }
 
 // LoadConfig reads configuration from file or environment variables
-func LoadConfig(path string) (config Config, err error) {
-	viper.AddConfigPath(path)
+func LoadConfig() {
+	viper.AddConfigPath(".")
 	viper.SetConfigName("app")
 	viper.SetConfigType("env") //json,xml
 
 	viper.AutomaticEnv()
 
-	err = viper.ReadInConfig()
+	err := viper.ReadInConfig()
 	if err != nil {
 		log.Fatalln("Failed reading the config", err)
 		return
 	}
 
-	err = viper.Unmarshal(&config)
-	return
+	err = viper.Unmarshal(&Conf)
 }

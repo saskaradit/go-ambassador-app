@@ -4,7 +4,6 @@ import (
 	"ambassador/src/models"
 	"ambassador/src/util"
 	"fmt"
-	"log"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -14,10 +13,7 @@ var DB *gorm.DB
 
 func ConnectDB() {
 	var err error
-	config, err := util.LoadConfig(".")
-	if err != nil {
-		log.Fatalln("cannot load config")
-	}
+	config := util.Conf
 	dsn := fmt.Sprintf("host=%v user=%v password=%v dbname=%v port=%v", config.DBHost, config.DBUser, config.DBPassword, config.DBName, config.DBPort)
 
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})

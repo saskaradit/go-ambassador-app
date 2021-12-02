@@ -4,7 +4,6 @@ import (
 	"ambassador/src/database"
 	"ambassador/src/routes"
 	"ambassador/src/util"
-	"log"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -25,11 +24,7 @@ func main() {
 }
 
 func init() {
-	var err error
-	config, err = util.LoadConfig(".")
-	if err != nil {
-		log.Fatalln("cannot load config")
-	}
+	util.LoadConfig()
 	database.ConnectDB()
 	database.AutoMigrate()
 	database.SetupRedis()
