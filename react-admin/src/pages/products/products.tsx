@@ -3,6 +3,7 @@ import { Product } from '../../models/product'
 import axios from 'axios'
 import Layout from '../../components/layout'
 import {Button, Table, TableBody, TableCell, TableFooter, TableHead, TablePagination, TableRow} from "@material-ui/core"
+import { ToggleButtonGroup } from '@material-ui/lab'
 
 const Products = () => {
   const [products, setProducts] = useState<Product[]>([])
@@ -28,6 +29,9 @@ const Products = () => {
 
   return (
     <Layout>
+      <div className="pt-3 pb-2 mb-3 border-bottom">
+        <Button href={'/admin/products/create'} variant="contained" color="primary">Add</Button>
+      </div>
       <Table>
         <TableHead>
           <TableRow>
@@ -49,7 +53,10 @@ const Products = () => {
                 <TableCell>{product.description}</TableCell>
                 <TableCell>{product.price}</TableCell>
                 <TableCell>
-                  <Button variant="contained" color="secondary" onClick={() => deleteProduct(product.id)}>Delete</Button>
+                  <ToggleButtonGroup>
+                    <Button variant="contained" color="primary" onClick={() => deleteProduct(product.id)} href={`/products/${product.id}/edit`}>Edit</Button>
+                    <Button variant="contained" color="secondary" onClick={() => deleteProduct(product.id)}>Delete</Button>
+                  </ToggleButtonGroup>
                 </TableCell>
               </TableRow>
             )
