@@ -1,10 +1,13 @@
 import { Button, TextField } from "@material-ui/core";
 import axios from "axios";
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { Dispatch, SyntheticEvent, useEffect, useState } from "react";
+import { connect } from "react-redux";
 import Layout from "../components/layout";
+import { User } from "../models/user";
+import { setUser } from "../redux/actions/setUserAction";
 
 
-const Profile = () => {
+const Profile = (props: any) => {
   const [first,setFirst] = useState('')
   const [last,setLast] = useState('')
   const [email,setEmail] = useState('')
@@ -12,22 +15,19 @@ const Profile = () => {
   const [confPassword,setConfPassword] = useState('')
 
   useEffect(() => {
-    (
-      async() => {
-        const {data} = await axios.get('/admin/user')
-        setFirst(data.first_name)
-        setLast(data.last_name)
-        setEmail(data.email)
-      }
-    )()
-  }, [])
+      setFirst(props.user.first_name)
+      setLast(props.user.last_name)
+      setEmail(props.user.email)
+  }, [props.user])
 
   const infoSubmit =  async (e: SyntheticEvent) => {
     e.preventDefault()
 
-    await axios.put('/admin/users/info', {
+    const{data} = await axios.put('/admin/users/info', {
       first_name: first, last_name: last, email
     })
+
+    props.setUser(data)
   }
   const passwordSubmit =  async (e: SyntheticEvent) => {
     e.preventDefault()
@@ -66,4 +66,10 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default connect((state: {user:User}) => ({
+  user: state.user
+}),(dispatch: Dispatch<any>) => ({
+  setUser: (user:User) => dispatch(setUser(user))
+})
+
+)(Profile);

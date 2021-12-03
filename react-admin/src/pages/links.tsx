@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '../components/layout'
-import { User } from '../models/user'
 import { Link } from '../models/link'
 import { Table, TableBody, TableCell, TableFooter, TableHead, TablePagination, TableRow} from "@material-ui/core"
 import axios from 'axios'
@@ -13,11 +12,11 @@ const Links = (props: any) => {
   useEffect(()=>{
     (
       async () => {
-        const {data} = await axios.get('/admin/users/${props.match.params.id}/links')
+        const {data} = await axios.get(`/admin/users/${props.match.params.id}/links`)
         setLinks(data)
       }
-    )
-  },[])
+    )()
+  },[]) // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <Layout>
       <Table>

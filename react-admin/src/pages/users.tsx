@@ -15,7 +15,7 @@ const Users = () => {
         const {data} = await axios.get('/admin/ambassadors')
         setUsers(data)
       }
-    )
+    )()
   },[])
   return (
     <Layout>

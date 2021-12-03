@@ -13,7 +13,7 @@ const Orders = () => {
         const {data} = await axios.get('/admin/orders')
         setOrders(data)
       }
-    )
+    )()
   },[])
 
   return (

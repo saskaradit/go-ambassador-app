@@ -22,5 +22,9 @@
   },
   "include": [
     "src"
+  ],
+  "no-unused-expressions": "off",
+  "@typescript-eslint/no-unused-expressions": [
+    "error"
   ]
 }

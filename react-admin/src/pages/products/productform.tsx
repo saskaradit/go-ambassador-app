@@ -1,5 +1,4 @@
 import React, { SyntheticEvent, useEffect, useState } from 'react'
-import { Product } from '../../models/product'
 import axios from 'axios'
 import Layout from '../../components/layout'
 import {Button, TextField} from "@material-ui/core"
@@ -24,7 +23,7 @@ const ProductForm = (props: any) => {
         }
       )()
     }
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const submit = async(e: SyntheticEvent) => {
     e.preventDefault()
