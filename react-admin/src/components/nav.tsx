@@ -5,7 +5,7 @@ import {User} from "../models/user"
 
 const Nav = (props: {user?: User | null}) => {
   const logout = async () => {
-    await axios.post('/logout')
+    await axios.post('/admin/logout')
   }
   return (
     <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
