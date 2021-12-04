@@ -5,9 +5,9 @@ import { Table, TableBody, TableCell, TableFooter, TableHead, TablePagination, T
 import axios from 'axios'
 
 const Links = (props: any) => {
-  const [links, setLinks] = useState<Link[]>([])
-  const [page, setPage] = useState(0)
-  const perPage = 10
+  const [links, setLinks] = useState<Link[]>([]);
+  const [page, setPage] = useState(0);
+  const perPage = 10;
 
   useEffect(()=>{
     (
@@ -16,7 +16,7 @@ const Links = (props: any) => {
         setLinks(data)
       }
     )()
-  },[]) // eslint-disable-line react-hooks/exhaustive-deps
+  },[]) 
   return (
     <Layout>
       <Table>

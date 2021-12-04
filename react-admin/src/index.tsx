@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import axios from 'axios';
 import {configureStore} from "./redux/configureStore"
-import { Provider } from 'react-redux';
+import {Provider} from "react-redux";
 
 axios.defaults.baseURL =  'http://localhost:8080/api/v1'
 axios.defaults.withCredentials = true

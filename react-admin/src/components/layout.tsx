@@ -15,7 +15,6 @@ const Layout = (props: any) => {
       async() => {
         try {
           const {data} = await axios.get('/admin/user')
-          setUser(data)
           props.setUser(data)
         } catch (error) {
           setRedirect(true)
@@ -45,12 +44,12 @@ const Layout = (props: any) => {
   )
 }
 
-const mapStateToProps = (state: {user:User}) => ({
-  user: state.user
+const mapStateToProps = (state: { user: User }) => ({
+    user: state.user
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  setUser: (user:User) => dispatch(setUser(user))
+    setUser: (user: User) => dispatch(setUser(user))
 })
 
-export default connect(mapStateToProps,mapDispatchToProps)(Layout)
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

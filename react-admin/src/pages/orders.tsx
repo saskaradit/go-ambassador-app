@@ -7,14 +7,15 @@ import { Order } from '../models/order'
 const Orders = () => {
   const [orders, setOrders] = useState<Order[]>([])
 
-  useEffect(()=>{
+  useEffect(() => {
     (
-      async () => {
-        const {data} = await axios.get('/admin/orders')
-        setOrders(data)
-      }
+        async () => {
+            const {data} = await axios.get('/admin/orders');
+
+            setOrders(data);
+        }
     )()
-  },[])
+    },[]);
 
   return (
     <Layout>

@@ -9,14 +9,15 @@ const Users = () => {
   const [page, setPage] = useState(0)
   const perPage =10
   
-  useEffect(()=>{
-    (
-      async () => {
-        const {data} = await axios.get('/admin/ambassadors')
-        setUsers(data)
-      }
-    )()
-  },[])
+  useEffect(() => {
+  (
+    async () => {
+      const {data} = await axios.get('/admin/ambassadors');
+
+      setUsers(data);
+    }
+  )()
+  }, []);
   return (
     <Layout>
       <Table>

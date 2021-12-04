@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {User} from "../models/user"
 
-const Nav = (props: {user?: User | null}) => {
+const Nav = (props: {user: User | null}) => {
   const logout = async () => {
     await axios.post('/admin/logout')
   }
@@ -21,5 +21,4 @@ const Nav = (props: {user?: User | null}) => {
 
 export default connect((state: {user:User}) => ({
   user: state.user
-})
-)(Nav);
+}))(Nav);

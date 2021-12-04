@@ -8,15 +8,15 @@ import { setUser } from "../redux/actions/setUserAction";
 
 
 const Profile = (props: any) => {
-  const [first,setFirst] = useState('')
-  const [last,setLast] = useState('')
-  const [email,setEmail] = useState('')
-  const [password,setPassword] = useState('')
-  const [confPassword,setConfPassword] = useState('')
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [password_confirm, setPasswordConfirm] = useState('');
 
   useEffect(() => {
-      setFirst(props.user.first_name)
-      setLast(props.user.last_name)
+      setFirstName(props.user.first_name)
+      setLastName(props.user.last_name)
       setEmail(props.user.email)
   }, [props.user])
 
@@ -24,7 +24,9 @@ const Profile = (props: any) => {
     e.preventDefault()
 
     const{data} = await axios.put('/admin/users/info', {
-      first_name: first, last_name: last, email
+      first_name,
+      last_name,
+      email
     })
 
     props.setUser(data)
@@ -32,7 +34,7 @@ const Profile = (props: any) => {
   const passwordSubmit =  async (e: SyntheticEvent) => {
     e.preventDefault()
     await axios.put('/admin/users/password',{
-      password, password_confirm: confPassword
+      password, password_confirm
     })
   }
 
@@ -41,10 +43,10 @@ const Profile = (props: any) => {
       <h3>Account Information</h3>
       <form onSubmit={infoSubmit}>
         <div className="mb-3">
-          <TextField value={first} label="First Name" onChange={e => setFirst(e.target.value)}/>
+          <TextField value={first_name} label="First Name" onChange={e => setFirstName(e.target.value)}/>
         </div>
         <div className="mb-3">
-          <TextField value={last} label="Last Name" onChange={e => setLast(e.target.value)}/>
+          <TextField value={last_name} label="Last Name" onChange={e => setLastName(e.target.value)}/>
         </div>
         <div className="mb-3">
           <TextField value={email} label="Email" onChange={e => setEmail(e.target.value)}/>
@@ -58,7 +60,7 @@ const Profile = (props: any) => {
           <TextField label="Password" type="password" onChange={e => setPassword(e.target.value)}/>
         </div>
         <div className="mb-3">
-          <TextField label="Confirm Password" type="password" onChange={e => setConfPassword(e.target.value)}/>
+          <TextField label="Confirm Password" type="password" onChange={e => setPasswordConfirm(e.target.value)}/>
         </div>
         <Button variant="contained" color="primary" type="submit">Submit</Button>
       </form>
@@ -66,10 +68,11 @@ const Profile = (props: any) => {
   )
 }
 
-export default connect((state: {user:User}) => ({
-  user: state.user
-}),(dispatch: Dispatch<any>) => ({
-  setUser: (user:User) => dispatch(setUser(user))
-})
-
+export default connect(
+    (state: { user: User }) => ({
+        user: state.user
+    }),
+    (dispatch: Dispatch<any>) => ({
+        setUser: (user: User) => dispatch(setUser(user))
+    })
 )(Profile);
