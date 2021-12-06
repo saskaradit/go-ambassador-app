@@ -1,6 +1,7 @@
 import './App.css';
 import {BrowserRouter,Route, Routes} from 'react-router-dom'
 import ProductsFrontend from './pages/ProductsFrontend';
+import ProductsBackend from './pages/ProductsBackend';
 import Login from './pages/login/login'
 import Register from './pages/register'
 import Profile from './pages/profile'
@@ -13,6 +14,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<ProductsFrontend/>}></Route>
+          <Route path='/backend' element={<ProductsBackend/>}></Route>
           <Route path='/login' element={<Login/>}></Route>
           <Route path='/register' element={<Register/>}></Route>
           <Route path='/profile' element={<Profile/>}></Route>
