@@ -1,25 +1,23 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { Dispatch, useState } from 'react'
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router'
 import { Link } from 'react-router-dom';
 import {User} from "../models/user"
+import { setUser } from '../redux/actions/setUserAction';
 
-const Nav = (props: {user: User | null}) => {
-  const [redirect, setRedirect] = useState(false)
+const Nav = (props: any) => {
   let menu;
 
   const logout = async () => {
     await axios.post('logout')
-    setRedirect(true)
-  }
-
-  if(redirect){
-    return <Navigate to={'/login'}/>
+    props.setUser(null)
   }
 
   if(props.user?.id){
     <div>
+      <Link to={'/stats'} className="btn btn-me-2">Stats</Link>
+      <Link to={'/rankings'} className="btn btn-me-2">Rankings</Link>
       <a className="btn btn-sm btn-outline-secondary" onClick={() => async () => logout}>Logout</a>
       <Link to={'/profile'} className="btn btn-sm btn-outline-secondary">{props.user.last_name}</Link>
     </div>
@@ -55,4 +53,6 @@ const Nav = (props: {user: User | null}) => {
 
 export default connect((state: {user:User}) => ({
   user: state.user
+}),(dispatch: Dispatch<any>) => ({
+    setUser: (user: User) => dispatch(setUser(user))
 }))(Nav);

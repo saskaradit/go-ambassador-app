@@ -2,30 +2,38 @@ import React, { Dispatch, useEffect, useState } from 'react'
 import Nav from './nav'
 import Header from './header'
 import axios from 'axios'
-import { Navigate } from 'react-router'
+import { Navigate, useLocation } from 'react-router'
 import { User } from '../models/user'
 import { connect } from 'react-redux'
 import {setUser} from '../redux/actions/setUserAction'
 
 const Layout = (props: any) => {
+  const location = useLocation()
   useEffect(() => {
   (
-    async() => {
-      try {
-        const {data} = await axios.get('/admin/user')
-        props.setUser(data)
-      } catch (error) {
-        console.log(error)
+      async() => {
+        try {
+          const {data} = await axios.get('/admin/user')
+          props.setUser(data)
+        } catch (error) {
+          console.log(error)
+        }
       }
-    }
-  )()
-}, [props])
+    )()
+  }, [props])
+
+  let header 
+
+  if(location.pathname==='/' || location.pathname === '/backend'){
+    header = <Header/>
+
+  }
 
   return (
   <div>
     <Nav/>
       <main role="main">
-        <Header/>
+        {header}
         <div className="album py-5 bg-light">
           <div className="container">
             {props.children}

@@ -1,18 +1,42 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { User } from '../models/user'
 
-const Header = () => {
+const Header = (props: {user: User}) => {
+  const [title, setTitle] = useState('welcome')
+  const [description, setDescription] = useState('Share link')
+
+  useEffect(() => {
+    if(props.user?.id){
+      setTitle(`$${props.user.revenue}`)
+      setDescription('You have earned this far')
+    }else{
+      setTitle('Welcome')
+      setDescription('Share links to earn money')
+    }
+  }, [props.user])
+
+  let btns;
+  if(props.user?.id){
+    btns = (
+      <p>
+          <Link to={'/login'} className="btn btn-primary my-2">Main call to action</Link>
+          <Link to={'/register'} className="btn btn-secondary my-2">Secondary action</Link>
+        </p>
+    )
+  }
   return (
     <section className="jumbotron text-center">
       <div className="container">
-        <h1 className="jumbotron-heading">Album example</h1>
-        <p className="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
-        <p>
-          <a href="#" className="btn btn-primary my-2">Main call to action</a>
-          <a href="#" className="btn btn-secondary my-2">Secondary action</a>
-        </p>
+        <h1 className="jumbotron-heading">{title}</h1>
+        <p className="lead text-muted">{description}</p>
+        {btns}
       </div>
     </section>
   )
 }
 
-export default Header
+export default connect((state: {user:User}) => ({
+  user: state.user
+}))(Header)
