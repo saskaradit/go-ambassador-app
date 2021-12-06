@@ -3,12 +3,14 @@ package main
 import (
 	"ambassador/src/database"
 	"ambassador/src/models"
+	"ambassador/src/util"
 	"math/rand"
 
 	"github.com/bxcodec/faker/v3"
 )
 
 func main() {
+	util.LoadConfig()
 	database.ConnectDB()
 	for i := 0; i < 30; i++ {
 		product := models.Product{

@@ -3,20 +3,23 @@ import Layout from '../components/layout'
 import { Link } from '../models/link'
 import { Table, TableBody, TableCell, TableFooter, TableHead, TablePagination, TableRow} from "@material-ui/core"
 import axios from 'axios'
+import { useParams } from 'react-router'
 
 const Links = (props: any) => {
   const [links, setLinks] = useState<Link[]>([]);
   const [page, setPage] = useState(0);
   const perPage = 10;
+  const {id} = useParams()
 
   useEffect(()=>{
     (
       async () => {
-        const {data} = await axios.get(`/admin/users/${props.match.params.id}/links`)
+        const {data} = await axios.get(`/admin/users/${id}/links`)
+        console.log(data)
         setLinks(data)
       }
     )()
-  },[]) 
+  },[id]) 
   return (
     <Layout>
       <Table>
@@ -29,7 +32,7 @@ const Links = (props: any) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {links.slice(page * perPage, (page) *perPage).map(link => {
+            {links.slice(page * perPage, (page+1) *perPage).map(link => {
               return (
                 <TableRow key={link.id}>
                   <TableCell>{link.id}</TableCell>
@@ -41,6 +44,7 @@ const Links = (props: any) => {
             })}
           </TableBody>
           <TableFooter>
+            <TableRow>
               <TablePagination
                 count={links.length}
                 page={page}
@@ -48,6 +52,7 @@ const Links = (props: any) => {
                 rowsPerPage={perPage}
                 rowsPerPageOptions={[]}
               />
+            </TableRow>
           </TableFooter>
         </Table>
     </Layout>

@@ -51,7 +51,7 @@ const Profile = (props: any) => {
         <div className="mb-3">
           <TextField value={email} label="Email" onChange={e => setEmail(e.target.value)}/>
         </div>
-        <Button variant="contained" color="primary" type="submit"></Button>
+        <Button variant="contained" color="primary" type="submit">Edit</Button>
       </form>
 
       <h3 className="mt-4">Change Password</h3>

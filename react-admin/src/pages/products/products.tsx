@@ -8,16 +8,17 @@ import { ToggleButtonGroup } from '@material-ui/lab'
 const Products = () => {
   const [products, setProducts] = useState<Product[]>([])
   const [page, setPage] = useState(0)
-  const perPage = 0
+  const perPage = 10
 
-  useEffect(()=>{
+  useEffect(() => {
     (
       async () => {
-        const {data} = await axios.get('/admin/products')
-        setProducts(data)
+        const {data} = await axios.get('/admin/products');
+
+        setProducts(data);
       }
-    )()
-  })
+    )();
+    }, []);
 
   const deleteProduct = async (id:number) =>{
     if(window.confirm('are you sure?')){
@@ -30,7 +31,7 @@ const Products = () => {
   return (
     <Layout>
       <div className="pt-3 pb-2 mb-3 border-bottom">
-        <Button href={'/admin/products/create'} variant="contained" color="primary">Add</Button>
+        <Button href={'/products/create'} variant="contained" color="primary">Add</Button>
       </div>
       <Table>
         <TableHead>
@@ -44,17 +45,17 @@ const Products = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {products.slice(page * perPage, (page)*perPage).map(product => {
+          {products.slice(page * perPage, (page+1)*perPage).map(product => {
             return (
               <TableRow key={product.id}>
                 <TableCell>{product.id}</TableCell>
-                <TableCell><img src={product.image} width={50} alt=""/></TableCell>
+                <TableCell><img src="https://images.unsplash.com/photo-1612444530582-fc66183b16f7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1376&q=80" width={50} alt=""/></TableCell>
                 <TableCell>{product.title}</TableCell>
                 <TableCell>{product.description}</TableCell>
                 <TableCell>{product.price}</TableCell>
                 <TableCell>
                   <ToggleButtonGroup>
-                    <Button variant="contained" color="primary" onClick={() => deleteProduct(product.id)} href={`/products/${product.id}/edit`}>Edit</Button>
+                    <Button variant="contained" color="primary" href={`/products/${product.id}/edit`}>Edit</Button>
                     <Button variant="contained" color="secondary" onClick={() => deleteProduct(product.id)}>Delete</Button>
                   </ToggleButtonGroup>
                 </TableCell>
@@ -62,15 +63,17 @@ const Products = () => {
             )
           })}
         </TableBody>
-          <TableFooter>
-              <TablePagination
-                count={products.length}
-                page={page}
-                onPageChange={(e, newPage)=> setPage(newPage)}
-                rowsPerPage={perPage}
-                rowsPerPageOptions={[]}
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              count={products.length}
+              page={page}
+              onPageChange={(e, newPage)=> setPage(newPage)}
+              rowsPerPage={perPage}
+              rowsPerPageOptions={[]}
               />
-          </TableFooter>
+          </TableRow>
+        </TableFooter>
       </Table>
     </Layout>
   )

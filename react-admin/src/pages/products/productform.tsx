@@ -2,7 +2,7 @@ import React, { SyntheticEvent, useEffect, useState } from 'react'
 import axios from 'axios'
 import Layout from '../../components/layout'
 import {Button, TextField} from "@material-ui/core"
-import { Navigate } from 'react-router'
+import { Navigate, useParams } from 'react-router'
 
 const ProductForm = (props: any) => {
   const [title,setTitle] = useState('')
@@ -10,12 +10,14 @@ const ProductForm = (props: any) => {
   const [image,setImage] = useState('')
   const [price,setPrice] = useState('')
   const [redirect,setRedirect] = useState(false)
+  const {id} = useParams()
 
   useEffect(() => {
-    if (props.match.params.id) {
+    if (id) {
       (
         async () => {
-          const {data} = await axios.get(`/admin/products/${props.match.params.id}`)
+          const {data} = await axios.get(`/admin/products/${id}`);
+
           setTitle(data.title);
           setDescription(data.description);
           setImage(data.image);
@@ -23,7 +25,7 @@ const ProductForm = (props: any) => {
         }
       )();
     }
-    }, [])
+    })
 
   const submit = async(e: SyntheticEvent) => {
     e.preventDefault()
@@ -31,8 +33,8 @@ const ProductForm = (props: any) => {
       title, description, image, price
     }
 
-    if (props.match.params.id){
-      await axios.put(`/admin/products/${props.match.params.id}`,data)
+    if (id){
+      await axios.put(`/admin/products/${id}`,data)
     }else{
       await axios.post('/admin/products',data)
     }
