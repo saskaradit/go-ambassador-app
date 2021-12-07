@@ -1,8 +1,8 @@
-import React, { Dispatch, useEffect, useState } from 'react'
+import React, { Dispatch, useEffect } from 'react'
 import Nav from './nav'
 import Header from './header'
 import axios from 'axios'
-import { Navigate, useLocation } from 'react-router'
+import {useLocation } from 'react-router'
 import { User } from '../models/user'
 import { connect } from 'react-redux'
 import {setUser} from '../redux/actions/setUserAction'
@@ -13,10 +13,9 @@ const Layout = (props: any) => {
   (
       async() => {
         try {
-          const {data} = await axios.get('/admin/user')
+          const {data} = await axios.get('/user')
           props.setUser(data)
         } catch (error) {
-          console.log(error)
         }
       }
     )()

@@ -8,7 +8,7 @@ const Login = () => {
   const [redirect, setRedirect] = useState(false)
   const submit = async(e: SyntheticEvent) => {
     e.preventDefault()
-    await axios.post('/admin/login', {
+    await axios.post('/login', {
       email, password
     },)
 

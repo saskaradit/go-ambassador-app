@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Nav from '../components/nav'
 import Products from '../components/products'
 import Layout from '../components/layout'
 import axios from 'axios'
@@ -29,7 +28,7 @@ const ProductsBackend = (props: any) => {
         }
         const {data} = await axios.get(`products/backend?${arr.join('&')}`)
         setProducts(filters.page === 1 ? data.data : [...products, ...data.data])
-        setLastPage(data.meta.last_page)
+        setLastPage(data.last_page)
       }
     )()
   }, [filters])

@@ -15,7 +15,6 @@ const Links = (props: any) => {
     (
       async () => {
         const {data} = await axios.get(`/admin/users/${id}/links`)
-        console.log(data)
         setLinks(data)
       }
     )()

@@ -18,11 +18,11 @@ const Header = (props: {user: User}) => {
   }, [props.user])
 
   let btns;
-  if(props.user?.id){
+  if(!props.user?.id){
     btns = (
       <p>
-          <Link to={'/login'} className="btn btn-primary my-2">Main call to action</Link>
-          <Link to={'/register'} className="btn btn-secondary my-2">Secondary action</Link>
+          <Link to={'/login'} className="btn btn-primary my-2">Loginn</Link>
+          <Link to={'/register'} className="btn btn-secondary my-2">Register</Link>
         </p>
     )
   }
