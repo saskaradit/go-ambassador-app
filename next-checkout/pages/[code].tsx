@@ -38,7 +38,7 @@ export default function Home() {
 
   const changePrice = (id: number, quantity: number) => {
     setQuantities(quantities.map(q => {
-      if(q.product === id ){
+      if(q.product_id === id ){
         return {
           ...q,
           quantity
@@ -51,7 +51,6 @@ export default function Home() {
   const totalPrice = () => {
     return quantities.reduce((s,q) => {
       const product = products.find(p => p.id === q.product_id)
-
       return s + product.price * q.quantity
     }, 0 )
   }
